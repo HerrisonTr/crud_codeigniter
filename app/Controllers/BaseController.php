@@ -55,4 +55,23 @@ abstract class BaseController extends Controller
 
         // E.g.: $this->session = \Config\Services::session();
     }
+
+    /**
+     * Retorna a view com um template pré-definido
+     *
+     * @param string $page
+     * @param array $data
+     * @return void
+     */
+    public function template(string $page, array $data = [])
+    {
+        // Define dados padrões que serão usados em todas as páginas
+        $data['title'] = $data['title'] ?? 'FIOSYS - Controle de usuários';  // Título padrão se não for definido
+
+        // Carrega a view principal que contém o layout padrão
+        echo view('layouts/main', [
+            'content' => view($page, $data),  // Passa o conteúdo dinâmico da página
+            'data'    => $data               // Passa dados adicionais para o layout
+        ]);
+    }
 }
