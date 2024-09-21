@@ -33,7 +33,7 @@
         <div class="card-header">
             <div class="d-flex flex-column flex-sm-row justify-content-between align-itens-center">
                 <h3 class="card-title"> Usuários cadastrados </h3>
-                <div class="d-flex justify-content-start justify-content-sm-end">
+                <div class="d-flex justify-content-start justify-content-sm-end mt-2 mt-sm-0">
                     <?php if (session('isAdmin')) : ?>
                         <a href="<?= base_url('/users/create') ?>" class="btn btn-primary float-right" aria-label="Cadastrar usuário">
                             <i class="bi bi-person-fill-add" aria-hidden="true"></i> Cadastrar usuário
@@ -118,8 +118,8 @@
         const swalConfirmaDeletarUsuario = Swal.mixin({
             customClass: {
                 actions: 'd-flex justify-content-between w-100 py-2 px-5',
-                confirmButton: "btn btn-success",
-                cancelButton: "btn btn-danger"
+                confirmButton: "btn btn-success mb-2",
+                cancelButton: "btn btn-danger mb-2"
             },
             buttonsStyling: false
         });
