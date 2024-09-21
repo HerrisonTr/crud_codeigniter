@@ -69,7 +69,7 @@ Este projeto é um sistema de gerenciamento de usuários desenvolvido como parte
     - Para popular a tabela de usuários com usuários chaves:
     ``` bash
     # ADMINISTRADOR
-    # Login: admin@admin 
+    # Login: admin@admin.com 
     # Senha: admin
     
     # CONVIDADO
@@ -91,9 +91,9 @@ O layout do sistema foi construído utilizando o template AdminLTE v3. O AdminLT
 Após rodar as seeders, um usuário administrador será criado automaticamente. Use as seguintes credenciais para acessar o sistema:
 
 - **Usuário administrador**
-    - Usuário: admin@admin
+    - Usuário: admin@admin.com
     - Senha: admin
 
 - **Usuário convidado**
-    - Usuário: guest@guest
+    - Usuário: guest@guest.com
     - Senha: guest
