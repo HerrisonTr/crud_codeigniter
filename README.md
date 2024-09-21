@@ -76,7 +76,7 @@ Este projeto é um sistema de gerenciamento de usuários desenvolvido como parte
     # Login: guest
     # Senha: guest
     
-    php spark db:seed UserSeeder
+    php spark db:seed UsersSeeder
     ``` 
 
 6. **Inicie o servidor de desenvolvimento:**
