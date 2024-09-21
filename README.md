@@ -1,68 +1,99 @@
-# CodeIgniter 4 Application Starter
+# FIOSYS Gerenciamento de usuários - CodeIgniter 4
 
-## What is CodeIgniter?
+Este projeto é um sistema de gerenciamento de usuários desenvolvido como parte de um processo seletivo. Ele foi implementado utilizando o framework **CodeIgniter 4** e **PHP 8.2**. O sistema oferece funcionalidades de CRUD (Criar, Ler, Atualizar e Deletar) de usuários, com autenticação básica e um layout integrado utilizando o template **AdminLTE v3**.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Tecnologias Utilizadas
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+- **PHP** 8.2
+- **CodeIgniter 4**
+- **MySQL** (ou qualquer outro banco de dados compatível com CodeIgniter)
+- **HTML/CSS** com templates para o front-end
+- **Migrations e Seeders** para gerenciar a base de dados
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Funcionalidades
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- **Listar Usuários**: Exibe uma lista de usuários cadastrados.
+- **Cadastrar Usuário**: Permite o cadastro de novos usuários.
+- **Editar Usuário**: Possibilita a edição dos dados de usuários existentes.
+- **Deletar Usuário**: Remove usuários do sistema.
+- **Autenticação Básica**: Apenas usuários autenticados podem acessar as rotas protegidas.
+- **Tipos de Perfil de Usuário**: O sistema permite definir perfis de usuário como `admin` ou `guest`. Usuários com perfil `guest` podem apenas visualizar a lista de usuários.
+- **Layout Dinâmico**: Foi criado um template no `BaseController` para facilitar a integração de layout em todas as páginas e evitar repetição de código.
 
-## Installation & updates
+## Requisitos
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+- **PHP 8.2** ou superior
+- **Composer**
+- **Banco de Dados** MySQL ou outro compatível
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+## Instalação
 
-## Setup
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/seu-usuario/nome-do-repositorio.git
+   ```
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+2. **Instale as dependências com o Composer:**
+   ```bash
+   composer install
+   ```
 
-## Important Change with index.php
+3. **Configure o banco de dados:**
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+    - Copie o arquivo 'env' para '.env':
+    ```bash
+    cp .env.example .env
+    ```
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+    - No arquivo .env, configure os detalhes de conexão do banco de dados
+    ```bash
+    database.default.hostname = localhost
+    database.default.database = nome_do_banco
+    database.default.username = seu_usuario
+    database.default.password = sua_senha
+    database.default.DBDriver = MySQLi
+    ```
+    
+4. **Configure a URL do sistema em `app/config/app.php` na variável `$baseURL`:**
+    ```bash
+    public string $baseURL = 'http://localhost:8080/';
+    ```
+    
+    
+5. **Execute as migrations e seeders:**
+    
+    - Para criar as tabelas necessárias:
+    ``` bash
+    php spark migrate
+    ```
+    - Para popular a tabela de usuários com usuários chaves:
+    ``` bash
+    # ADMINISTRADOR
+    # Login: admin@admin 
+    # Senha: admin
+    
+    # CONVIDADO
+    # Login: guest
+    # Senha: guest
+    
+    php spark db:seed UserSeeder
+    ``` 
 
-**Please** read the user guide for a better explanation of how CI4 works!
+6. **Inicie o servidor de desenvolvimento:**
+      ```bash
+       php spark serve
+      ```
+    
+## Layout
+O layout do sistema foi construído utilizando o template AdminLTE v3. O AdminLTE é um painel de administração totalmente responsivo e gratuito, desenvolvido em Bootstrap 4. Para mais informações, acesse: [AdminLTE v3](https://adminlte.io/)
 
-## Repository Management
+## Usuários criados
+Após rodar as seeders, um usuário administrador será criado automaticamente. Use as seguintes credenciais para acessar o sistema:
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+- **Usuário administrador**
+    - Usuário: admin@admin
+    - Senha: admin
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
-
-## Server Requirements
-
-PHP version 8.1 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+- **Usuário convidado**
+    - Usuário: guest@guest
+    - Senha: guest
