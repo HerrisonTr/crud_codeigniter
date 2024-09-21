@@ -3,11 +3,10 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
 
 use App\Models\UserModel;
 use CodeIgniter\HTTP\RedirectResponse;
-use SebastianBergmann\Template\Template;
+use Exception;
 
 class UserController extends BaseController
 {
@@ -56,20 +55,24 @@ class UserController extends BaseController
      */
     public function store(): RedirectResponse
     {
-        // Valida os dados do formulário
-        if (!$this->validateUserInput()) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        try {
+            // Valida os dados do formulário
+            if (!$this->validateUserInput()) {
+                return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            }
+
+            $this->userModel->save([
+                'name' => $this->request->getPost('name'),
+                'email' => $this->request->getPost('email'),
+                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+                'profile_type' => $this->request->getPost('profile_type')
+            ]);
+
+
+            return redirect()->to(base_url('users/'))->with('success', 'Usuário cadastrado com sucesso');
+        } catch (Exception $e) {
+            return redirect()->to(base_url('users/'))->with('error', 'Erro ao cadastrar o usuário');
         }
-
-        $this->userModel->save([
-            'name' => $this->request->getPost('name'),
-            'email' => $this->request->getPost('email'),
-            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-            'profile_type' => $this->request->getPost('profile_type')
-        ]);
-
-
-        return redirect()->to(base_url('users/'))->with('success', 'Usuário cadastrado com sucesso');
     }
 
     /**
@@ -80,31 +83,35 @@ class UserController extends BaseController
      */
     public function update(int $id): RedirectResponse
     {
-        $user = $this->userModel->find($id);
+        try {
+            $user = $this->userModel->find($id);
 
-        if (!$user) {
-            return redirect()->to(base_url('/users'))->with('error', 'Usuário não encontrado');
+            if (!$user) {
+                return redirect()->to(base_url('/users'))->with('error', 'Usuário não encontrado');
+            }
+
+            if (!$this->validateUserInput($id)) {
+                return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            }
+
+            // Atualizando o usuário
+            $userData = [
+                'name' => $this->request->getPost('name'),
+                'email' => $this->request->getPost('email'),
+                'profile_type' => $this->request->getPost('profile_type')
+            ];
+
+            // Se a senha foi enviada, criptografa e atualiza
+            if ($this->request->getPost('password')) {
+                $userData['password'] = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+            }
+
+            $this->userModel->update($id, $userData);
+
+            return redirect()->back()->with('success', "O Usuário <b> {$user['name']} </b> foi atualizado.");
+        } catch (Exception $e) {
+            return redirect()->to(base_url('/users'))->with('error', 'Erro ao atualizar o usuário');
         }
-
-        if (!$this->validateUserInput($id)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        }
-
-        // Atualizando o usuário
-        $userData = [
-            'name' => $this->request->getPost('name'),
-            'email' => $this->request->getPost('email'),
-            'profile_type' => $this->request->getPost('profile_type')
-        ];
-
-        // Se a senha foi enviada, criptografa e atualiza
-        if ($this->request->getPost('password')) {
-            $userData['password'] = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
-        }
-
-        $this->userModel->update($id, $userData);
-
-        return redirect()->back()->with('success', "O Usuário <b> {$user['name']} </b> foi atualizado.");
     }
 
     /**
@@ -115,21 +122,25 @@ class UserController extends BaseController
      */
     public function delete(int $id): RedirectResponse
     {
-        $user = $this->userModel->find($id);
+        try {
+            $user = $this->userModel->find($id);
 
-        if (!$user) {
-            return redirect()->to(base_url('/users'))->with('error', 'Usuário não encontrado');
+            if (!$user) {
+                return redirect()->to(base_url('/users'))->with('error', 'Usuário não encontrado');
+            }
+
+            if ($id == session('id')) {
+                return redirect()->to(base_url('/users'))->with('error', 'Você não pode deletar o seu próprio usuário');
+            }
+
+            if ($this->userModel->delete($id)) {
+                return redirect()->to(base_url('/users'))->with('success', 'Usuário deletado com sucesso!');
+            }
+
+            return redirect()->to(base_url('/users'))->with('error', 'Erro ao deletar o usuário');
+        } catch (Exception $e) {
+            return redirect()->to(base_url('/users'))->with('error', 'Erro ao deletar o usuário');
         }
-
-        if ($id == session('id')) {
-            return redirect()->to(base_url('/users'))->with('error', 'Você não pode deletar o seu próprio usuário');
-        }
-
-        if ($this->userModel->delete($id)) {
-            return redirect()->to(base_url('/users'))->with('success', 'Usuário deletado com sucesso!');
-        }
-
-        return redirect()->to(base_url('/users'))->with('error', 'Erro ao deletar o usuário');
     }
 
     /**
