@@ -26,7 +26,7 @@
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Faça login para continuar</p>
-                <?= form_open('/login', ['method' => 'POST']) ?>
+                <?= form_open(base_url('/login'), ['method' => 'POST']) ?>
 
                 <?php if (isset($_GET['logout'])) : ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">

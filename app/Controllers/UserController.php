@@ -24,7 +24,7 @@ class UserController extends BaseController
     public function index()
     {
         $data['users'] = $this->userModel->findAll();
-        return $this->template('users/index', $data);
+        return $this->template('/users/index', $data);
     }
 
     /**
@@ -43,7 +43,7 @@ class UserController extends BaseController
         $data['user'] = $this->userModel->find($id);
 
         if (!$data['user']) {
-            return redirect()->to('/users')->with('error', 'Usuário não encontrado');
+            return redirect()->to(base_url('/users'))->with('error', 'Usuário não encontrado');
         }
 
         return $this->template('users/edit', $data);
@@ -69,7 +69,7 @@ class UserController extends BaseController
         ]);
 
 
-        return redirect()->to('/users')->with('success', 'Usuário cadastrado com sucesso');
+        return redirect()->to(base_url('users/'))->with('success', 'Usuário cadastrado com sucesso');
     }
 
     /**
@@ -83,7 +83,7 @@ class UserController extends BaseController
         $user = $this->userModel->find($id);
 
         if (!$user) {
-            return redirect()->to('/users')->with('error', 'Usuário não encontrado');
+            return redirect()->to(base_url('/users'))->with('error', 'Usuário não encontrado');
         }
 
         if (!$this->validateUserInput($id)) {
@@ -118,18 +118,18 @@ class UserController extends BaseController
         $user = $this->userModel->find($id);
 
         if (!$user) {
-            return redirect()->to('/users')->with('error', 'Usuário não encontrado');
+            return redirect()->to(base_url('/users'))->with('error', 'Usuário não encontrado');
         }
 
         if ($id == session('id')) {
-            return redirect()->to('/users')->with('error', 'Você não pode deletar o seu próprio usuário');
+            return redirect()->to(base_url('/users'))->with('error', 'Você não pode deletar o seu próprio usuário');
         }
 
         if ($this->userModel->delete($id)) {
-            return redirect()->to('/users')->with('success', 'Usuário deletado com sucesso!');
+            return redirect()->to(base_url('/users'))->with('success', 'Usuário deletado com sucesso!');
         }
 
-        return redirect()->to('/users')->with('error', 'Erro ao deletar o usuário');
+        return redirect()->to(base_url('/users'))->with('error', 'Erro ao deletar o usuário');
     }
 
     /**

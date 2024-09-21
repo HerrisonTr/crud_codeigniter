@@ -4,7 +4,7 @@
             <h3 class="card-title text-center">Editar Usuário</h3>
         </div>
         <div class="card-body">
-            <?= form_open("/users/update/{$user['id']}", ['id' => 'formulario-edicao', 'method' => 'post'], ['_method' => 'PUT']) ?>
+            <?= form_open(base_url("/users/update/{$user['id']}"), ['id' => 'formulario-edicao', 'method' => 'post'], ['_method' => 'PUT']) ?>
 
             <div class="row mb-3">
                 <label for="nome" class="col-sm-2 col-form-label">Nome</label>

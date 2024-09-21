@@ -70,7 +70,7 @@
                                         </a>
 
                                         <?= form_open(
-                                            "users/delete/{$user['id']}",
+                                            base_url("users/delete/{$user['id']}"),
                                             [
                                                 'method' => 'post',
                                                 'class' => 'form-deletar-usuario d-inline'

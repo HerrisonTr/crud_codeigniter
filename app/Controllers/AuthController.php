@@ -33,7 +33,7 @@ class AuthController extends BaseController
         $password = $this->request->getPost('password');
 
         if (!$email || !$password) {
-            return redirect()->to('/')->with('error', 'Email e senha são obrigatórios.');
+            return redirect()->to(base_url('/'))->with('error', 'Email e senha são obrigatórios.');
         }
 
         $user = $this->userModel->where('email', $email)->first();
@@ -41,10 +41,10 @@ class AuthController extends BaseController
         if ($user && password_verify($password, $user['password'])) {
             // Cria a sessão do usuário
             $this->setUserSession($user);
-            return redirect()->to('/dashboard')->with('success', 'Login realizado com sucesso.');
+            return redirect()->to(base_url('/dashboard'))->with('success', 'Login realizado com sucesso.');
         }
 
-        return redirect()->to('/')->with('error', 'Email ou senha inválidos.');
+        return redirect()->to(base_url('/'))->with('error', 'Email ou senha inválidos.');
     }
 
     /**
@@ -71,6 +71,6 @@ class AuthController extends BaseController
     {
         session()->destroy();
 
-        return redirect()->to('/?logout');
+        return redirect()->to(base_url('/?logout'));
     }
 }

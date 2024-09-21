@@ -4,7 +4,7 @@
             <h3 class="card-title text-center"> Cadastro de usuários </h3>
         </div>
         <div class="card-body">
-            <?= form_open('/users/store', ['id' => 'formulario-cadastro', 'method' => 'post']) ?>
+            <?= form_open(base_url('/users/store'), ['id' => 'formulario-cadastro', 'method' => 'post']) ?>
             <div class="row mb-3">
                 <label for="nome" class="col-sm-2 col-form-label"> Nome </label>
                 <div class="col-sm-10">
