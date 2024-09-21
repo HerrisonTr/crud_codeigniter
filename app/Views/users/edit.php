@@ -131,7 +131,7 @@
             }
 
             // pelo menos 1 letra maiúscula, 1 letra minúscula, 1 número e 1 caractere especial.
-            let senhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+            let senhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]/;
 
             if (!senhaForte.test(senha)) {
                 event.preventDefault();

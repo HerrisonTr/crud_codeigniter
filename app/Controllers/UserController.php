@@ -143,7 +143,7 @@ class UserController extends BaseController
         $rules = [
             'name' => 'required|min_length[3]|max_length[40]',
             'email' => 'required|valid_email|is_unique[users.email,id,' . $id . ']',
-            'password' => $id ? 'permit_empty' : 'required' . '|min_length[8]|max_length[8]|regex_match[/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/]',
+            'password' => $id ? 'permit_empty' : 'required' . '|max_length[8]|regex_match[/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/]',
             'confirm_password' => 'permit_empty|matches[password]',
             'profile_type' => 'required|in_list[admin,guest]',
         ];
