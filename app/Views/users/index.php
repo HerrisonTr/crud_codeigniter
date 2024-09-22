@@ -118,8 +118,8 @@
         const swalConfirmaDeletarUsuario = Swal.mixin({
             customClass: {
                 actions: 'd-flex justify-content-between w-100 py-2 px-5',
-                confirmButton: "btn btn-success mb-2",
-                cancelButton: "btn btn-danger mb-2"
+                confirmButton: "btn btn-danger mb-2",
+                cancelButton: "btn btn-secondary mb-2"
             },
             buttonsStyling: false
         });
