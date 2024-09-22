@@ -182,6 +182,7 @@
             inputConfirmaSenha.prop('disabled', true);
             inputSenha.val('')
             inputConfirmaSenha.val('')
+            removeErroSenha();
         }
     }
 </script>
